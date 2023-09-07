@@ -72,9 +72,17 @@ while(Wire.available())
 
 The raw 24-bit values can be converted to standard units (kPa for pressure, °C for temperature) with the following equations:
 
-- Pressure (kPa) = max_pressure_kpa / 0.8 * (x / 2<sup>23</sup> - 0.1)
-- Temperature (°C) = x/2<sup>16</sup> + 25 (if x < 2<sup>23</sup>)
-- Temperature (°C) = (x - 2<sup>24</sup>)/2<sup>16</sup> + 25 (if x >= 2<sup>23</sup>)
+$$
+Pressure (kPa) = pressure_{max} / 0.8 \cdot (x / 2^{23} - 0.1)
+$$
+
+$$
+Temperature (°C) =
+\begin{cases}
+x/2^{16} + 25,  & x < 2^{23} \\
+\frac{x - 2^{24}}{2^{16}} + 25, & x >= 2^{23}
+\end{cases}
+$$
 
 ```c
 float to_pressure(uint32_t x) {
