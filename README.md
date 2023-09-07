@@ -30,9 +30,6 @@ These sensors are powered by 3.3V. The I<sup>2</sup>C interface operates at a cl
 
 The following connections are for the [Arduino Mega board](https://docs.arduino.cc/hardware/mega-2560), however, most all Arduino boards will be compatible with this code. The connections to various Arduino boards will be different than this example, so consult Arduino documentation for additional information.
 
-![Arduino wiring](images/arduino-wiring.svg)
-
-
 | Function | PS02 Color | Arduino Mega Pin |
 | -------- | ---------- | ---------------- |
 |   +3.3V  |     Red    |       3.3V       |
