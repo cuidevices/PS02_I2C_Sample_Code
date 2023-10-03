@@ -70,7 +70,7 @@ while(Wire.available())
 The raw 24-bit values can be converted to standard units (kPa for pressure, °C for temperature) with the following equations:
 
 $$
-Pressure (kPa) = pressure_{max} / 0.8 \cdot (x / 2^{23} - 0.1)
+Pressure (kPa) = P_{max} / 0.8 \cdot (x / 2^{23} - 0.1)
 $$
 
 $$
