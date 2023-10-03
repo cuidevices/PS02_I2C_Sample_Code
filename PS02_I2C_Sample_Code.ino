@@ -1,11 +1,16 @@
 #include <Wire.h>
 
 //I²C address for PS02 sensor
-const int address = 0x6D;
+const int i2c_address = 0x6D;
 
 //PS02 sensors are available in a number of different pressure ranges.
 //In this example, we use a 0-250kPa sensor.
 const float max_pressure_kPa = 250;
+
+//PS02 sensor measures both pressure and temperature.
+//These are stored in two separate registers
+const uint8_t pressure_register = 0x06;
+const uint8_t temperature_register = 0x09;
 
 //Convert raw 24-bit value to pressure in kPa
 float to_pressure(uint32_t x) {
@@ -32,12 +37,12 @@ void setup() {
 
 void loop() {
   //To get the pressure measurement, we must first "write" the register address to the I²C bus
-  Wire.beginTransmission(address);
-  Wire.write(0x06);
+  Wire.beginTransmission(i2c_address);
+  Wire.write(pressure_register);
   Wire.endTransmission();
 
   //Now read 3 bytes (24 bits) and combine them into a single value
-  Wire.requestFrom(address, 3);
+  Wire.requestFrom(i2c_address, 3);
   uint32_t pressure = 0;
   while(Wire.available())
   {
@@ -50,12 +55,12 @@ void loop() {
   Serial.println(" kPa");
 
   //To get the temperature measurement, we must first "write" the register address to the I²C bus
-  Wire.beginTransmission(address);
-  Wire.write(0x09);
+  Wire.beginTransmission(i2c_address);
+  Wire.write(temperature_register);
   Wire.endTransmission();
   
   //Now read 3 bytes (24 bits) and combine them into a single value
-  Wire.requestFrom(address, 3);
+  Wire.requestFrom(i2c_address, 3);
   uint32_t temperature = 0;
   while(Wire.available())
   {
